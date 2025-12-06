@@ -13,9 +13,9 @@ export interface User {
 export const createUser = async (user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<User | null> => {
   try {
     const result = await query(`
-      INSERT INTO users (email, pin, name, created_at, updated_at)
+      INSERT INTO users (email, password, name, created_at, updated_at)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING id, email, pin, name, created_at, updated_at
+      RETURNING id, email, password, name, created_at, updated_at
     `, [user.email, user.pin, user.name, new Date(), new Date()]);
 
     if (result.rows.length === 0) {
@@ -26,7 +26,7 @@ export const createUser = async (user: Omit<User, 'id' | 'createdAt' | 'updatedA
     return {
       id: row.id,
       email: row.email,
-      pin: row.pin,
+      pin: row.password,
       name: row.name,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at)
@@ -40,7 +40,7 @@ export const createUser = async (user: Omit<User, 'id' | 'createdAt' | 'updatedA
 export const findUserByEmail = async (email: string): Promise<User | null> => {
   try {
     const result = await query(`
-      SELECT id, email, pin, name, created_at, updated_at
+      SELECT id, email, password, name, created_at, updated_at
       FROM users
       WHERE email = $1
     `, [email]);
@@ -53,7 +53,7 @@ export const findUserByEmail = async (email: string): Promise<User | null> => {
     return {
       id: row.id,
       email: row.email,
-      pin: row.pin,
+      pin: row.password,
       name: row.name,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at)
