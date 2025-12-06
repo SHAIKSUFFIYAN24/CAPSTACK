@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import { config } from "../config/env";
 
 export const authMiddleware = (req: Request & { userId?: string }, res: Response, next: NextFunction) => {
   try {
@@ -20,7 +21,7 @@ export const authMiddleware = (req: Request & { userId?: string }, res: Response
       return res.status(401).json({ error: "Invalid token format" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(token, config.jwtSecret);
     req.userId = (decoded as any).userId;
 
     next();
