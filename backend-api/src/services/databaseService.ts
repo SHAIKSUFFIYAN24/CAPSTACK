@@ -109,6 +109,22 @@ export class DatabaseService {
   }
 
   /**
+   * Get user by email
+   */
+  static async getUserByEmail(email: string): Promise<{ id: number; email: string; name: string } | null> {
+    try {
+      const result = await query(`SELECT id, email, name FROM users WHERE email = $1 LIMIT 1`, [email]);
+      if (result.rows.length > 0) {
+        return result.rows[0];
+      }
+      return null;
+    } catch (error) {
+      logger.error(`Failed to get user by email ${email}: ${error}`);
+      return null;
+    }
+  }
+
+  /**
    * Ensure a user row exists for the given email. If exists, return id, otherwise create and return new id.
    */
   static async ensureUserExists(email: string, name: string): Promise<number> {
