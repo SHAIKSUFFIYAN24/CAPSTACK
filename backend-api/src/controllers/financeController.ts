@@ -12,7 +12,7 @@ export const calculateFinance = async (req: Request, res: Response) => {
 
 export const getHealthScore = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
-  const result = calculateHealthScore(userId);
+  const result = await calculateHealthScore(userId);
   res.json({
     score: result.totalScore,
     grade: result.grade,
@@ -24,7 +24,7 @@ export const getHealthScore = async (req: Request, res: Response) => {
 
 export const getSurvival = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
-  const result = calculateSurvivalMonths(userId);
+  const result = await calculateSurvivalMonths(userId);
   res.json({
     months: result.months,
     riskLevel: result.riskLevel,
@@ -36,7 +36,7 @@ export const getSurvival = async (req: Request, res: Response) => {
 
 export const getIncomeScore = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
-  const result = calculateIncomeSuitabilityScore(userId);
+  const result = await calculateIncomeSuitabilityScore(userId);
   res.json({
     score: result.totalScore,
     grade: result.grade,

@@ -32,7 +32,7 @@ router.get("/incomescore", getIncomeScore);
 
 router.get("/insights", async (req, res) => {
   const userId = (req as any).userId;
-  const result = generateComprehensiveInsights(userId);
+  const result = await generateComprehensiveInsights(userId);
   res.json(result);
 });
 

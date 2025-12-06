@@ -27,7 +27,7 @@ export const unlock = async (req: Request, res: Response) => {
 
 export const getStatus = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
-  const result = getSavingsStatus(userId);
+  const result = await getSavingsStatus(userId);
   res.json(result);
 };
 

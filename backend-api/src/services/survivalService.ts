@@ -1,3 +1,5 @@
+import { DatabaseService } from './databaseService';
+
 interface SurvivalInputs {
   emergencyFund: number;
   monthlyExpenses: number;
@@ -28,20 +30,38 @@ interface SurvivalResult {
   recommendations: string[];
 }
 
-export const calculateSurvivalMonths = (userId: number): SurvivalResult => {
-  // TODO: In production, fetch real user data from database
-  const mockInputs: SurvivalInputs = {
-    emergencyFund: 600000, // ₹6,00,000
-    monthlyExpenses: 45000, // ₹45,000
-    monthlyIncome: 75000, // ₹75,000
-    incomeStability: 0.8,
-    hasSideIncome: false,
-    dependents: 2,
-    location: 'metro',
-    jobSecurity: 0.7
+export const calculateSurvivalMonths = async (userId: number): Promise<SurvivalResult> => {
+  // Fetch real user data from database
+  const userData = await DatabaseService.getUserFinancialData(userId);
+
+  if (!userData) {
+    // Fallback to mock data if no user data found
+    const mockInputs: SurvivalInputs = {
+      emergencyFund: 600000,
+      monthlyExpenses: 45000,
+      monthlyIncome: 75000,
+      incomeStability: 0.8,
+      hasSideIncome: false,
+      dependents: 2,
+      location: 'metro',
+      jobSecurity: 0.7
+    };
+    return calculateSurvivalFromInputs(mockInputs);
+  }
+
+  // Map database data to SurvivalInputs
+  const survivalInputs: SurvivalInputs = {
+    emergencyFund: userData.emergencyFund,
+    monthlyExpenses: userData.monthlyExpenses,
+    monthlyIncome: userData.monthlyIncome,
+    incomeStability: userData.jobStability / 10, // Assuming jobStability is 0-10 scale
+    hasSideIncome: false, // TODO: Add to user profile
+    dependents: 0, // TODO: Add to user profile
+    location: 'metro', // TODO: Use from user profile
+    jobSecurity: userData.jobStability / 10
   };
 
-  return calculateSurvivalFromInputs(mockInputs);
+  return calculateSurvivalFromInputs(survivalInputs);
 };
 
 export const calculateSurvivalFromInputs = (inputs: SurvivalInputs): SurvivalResult => {
@@ -157,8 +177,8 @@ const generateSurvivalRecommendations = (inputs: SurvivalInputs, months: number)
   return recommendations;
 };
 
-export const getSurvivalTips = (userId: number) => {
-  const result = calculateSurvivalMonths(userId);
+export const getSurvivalTips = async (userId: number) => {
+  const result = await calculateSurvivalMonths(userId);
   return {
     tips: result.recommendations,
     riskLevel: result.riskLevel,

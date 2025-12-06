@@ -1,3 +1,5 @@
+import { DatabaseService } from './databaseService';
+
 interface FinancialData {
   monthlyIncome: number;
   monthlyExpenses: number;
@@ -23,20 +25,36 @@ interface HealthScoreResult {
   recommendations: string[];
 }
 
-export const calculateHealthScore = (userId: number): HealthScoreResult => {
-  // TODO: In production, fetch real user data from database
-  // For now, using mock data that can be replaced with real data
-  const mockData: FinancialData = {
-    monthlyIncome: 75000,
-    monthlyExpenses: 45000,
-    savingsRate: 0.25, // 25% of income
-    emergencyFundMonths: 8,
-    debtToIncomeRatio: 0.3, // 30% DTI
-    incomeStability: 0.85, // 85% stable
-    investmentDiversification: 0.7 // 70% diversified
+export const calculateHealthScore = async (userId: number): Promise<HealthScoreResult> => {
+  // Fetch real user data from database
+  const userData = await DatabaseService.getUserFinancialData(userId);
+
+  if (!userData) {
+    // Fallback to mock data if no user data found
+    const mockData: FinancialData = {
+      monthlyIncome: 75000,
+      monthlyExpenses: 45000,
+      savingsRate: 0.25,
+      emergencyFundMonths: 8,
+      debtToIncomeRatio: 0.3,
+      incomeStability: 0.85,
+      investmentDiversification: 0.7
+    };
+    return calculateScoreFromData(mockData);
+  }
+
+  // Map database data to FinancialData interface
+  const financialData: FinancialData = {
+    monthlyIncome: userData.monthlyIncome,
+    monthlyExpenses: userData.monthlyExpenses,
+    savingsRate: userData.monthlyIncome > 0 ? (userData.monthlyIncome - userData.monthlyExpenses) / userData.monthlyIncome : 0,
+    emergencyFundMonths: userData.monthlyExpenses > 0 ? userData.emergencyFund / userData.monthlyExpenses : 0,
+    debtToIncomeRatio: userData.monthlyIncome > 0 ? userData.debtAmount / userData.monthlyIncome : 0,
+    incomeStability: userData.jobStability / 10, // Assuming jobStability is 0-10 scale
+    investmentDiversification: userData.riskTolerance === 'high' ? 0.8 : userData.riskTolerance === 'medium' ? 0.6 : 0.4
   };
 
-  return calculateScoreFromData(mockData);
+  return calculateScoreFromData(financialData);
 };
 
 export const calculateScoreFromData = (data: FinancialData): HealthScoreResult => {
@@ -170,8 +188,8 @@ const generateInsightsAndRecommendations = (
   return { insights, recommendations };
 };
 
-export const getHealthInsights = (userId: number) => {
-  const result = calculateHealthScore(userId);
+export const getHealthInsights = async (userId: number) => {
+  const result = await calculateHealthScore(userId);
   return {
     insights: result.insights,
     recommendations: result.recommendations,

@@ -1,3 +1,5 @@
+import { DatabaseService } from './databaseService';
+
 interface IncomeData {
   monthlyIncome: number;
   incomeHistory: number[]; // Last 12 months
@@ -33,22 +35,41 @@ interface IncomeScoreResult {
   };
 }
 
-export const calculateIncomeSuitabilityScore = (userId: number): IncomeScoreResult => {
-  // TODO: In production, fetch real income data from database
-  const mockData: IncomeData = {
-    monthlyIncome: 75000,
-    incomeHistory: [70000, 72000, 74000, 75000, 76000, 75000, 77000, 78000, 75000, 80000, 82000, 75000],
+export const calculateIncomeSuitabilityScore = async (userId: number): Promise<IncomeScoreResult> => {
+  // Fetch real user data from database
+  const userData = await DatabaseService.getUserFinancialData(userId);
+
+  if (!userData) {
+    // Fallback to mock data if no user data found
+    const mockData: IncomeData = {
+      monthlyIncome: 75000,
+      incomeHistory: [70000, 72000, 74000, 75000, 76000, 75000, 77000, 78000, 75000, 80000, 82000, 75000],
+      incomeSources: [
+        { type: 'salary', amount: 65000, frequency: 'monthly', stability: 0.9 },
+        { type: 'freelance', amount: 10000, frequency: 'irregular', stability: 0.6 }
+      ],
+      growthRate: 0.08,
+      location: 'metro',
+      industry: 'technology',
+      experience: 5
+    };
+    return calculateIncomeScoreFromData(mockData);
+  }
+
+  // Map database data to IncomeData (using defaults for missing fields)
+  const incomeData: IncomeData = {
+    monthlyIncome: userData.monthlyIncome,
+    incomeHistory: Array(12).fill(userData.monthlyIncome), // Assume constant income for now
     incomeSources: [
-      { type: 'salary', amount: 65000, frequency: 'monthly', stability: 0.9 },
-      { type: 'freelance', amount: 10000, frequency: 'irregular', stability: 0.6 }
+      { type: 'salary', amount: userData.monthlyIncome, frequency: 'monthly', stability: userData.jobStability / 10 }
     ],
-    growthRate: 0.08, // 8% annual growth
-    location: 'metro',
-    industry: 'technology',
-    experience: 5
+    growthRate: 0.05, // Default 5% growth
+    location: 'metro', // TODO: Add to user profile
+    industry: 'technology', // TODO: Add to user profile
+    experience: 5 // TODO: Use from user profile
   };
 
-  return calculateIncomeScoreFromData(mockData);
+  return calculateIncomeScoreFromData(incomeData);
 };
 
 export const calculateIncomeScoreFromData = (data: IncomeData): IncomeScoreResult => {
@@ -344,16 +365,16 @@ const calculateIncomeProjections = (data: IncomeData) => {
 };
 
 // Legacy functions for backward compatibility
-export const analyzeIncomeVariance = (userId: number) => {
-  const result = calculateIncomeSuitabilityScore(userId);
+export const analyzeIncomeVariance = async (userId: number) => {
+  const result = await calculateIncomeSuitabilityScore(userId);
   return {
     stability: result.categoryScores.stability / 100,
     predictedVariance: 1 - (result.categoryScores.stability / 100)
   };
 };
 
-export const getIncomePredictions = (userId: number) => {
-  const result = calculateIncomeSuitabilityScore(userId);
+export const getIncomePredictions = async (userId: number) => {
+  const result = await calculateIncomeSuitabilityScore(userId);
   return {
     nextMonth: result.projections.nextYear / 12,
     confidence: result.projections.confidence

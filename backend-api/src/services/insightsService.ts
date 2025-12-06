@@ -45,12 +45,12 @@ interface InsightsResult {
   };
 }
 
-export const generateComprehensiveInsights = (userId: number): InsightsResult => {
+export const generateComprehensiveInsights = async (userId: number): Promise<InsightsResult> => {
   // Gather data from all services
-  const healthScore = calculateHealthScore(userId);
-  const survival = calculateSurvivalMonths(userId);
-  const incomeScore = calculateIncomeSuitabilityScore(userId);
-  const savingsStatus = getSavingsStatus(userId);
+  const healthScore = await calculateHealthScore(userId);
+  const survival = await calculateSurvivalMonths(userId);
+  const incomeScore = await calculateIncomeSuitabilityScore(userId);
+  const savingsStatus = await getSavingsStatus(userId);
   const disciplineInsights = getDisciplineInsights(userId);
 
   // Generate alerts based on all data
@@ -308,18 +308,18 @@ const generateDetailedInsights = (userId: number, data: any): Insight[] => {
 };
 
 // Legacy functions for backward compatibility
-export const generateInsights = (userId: number) => {
-  const result = generateComprehensiveInsights(userId);
+export const generateInsights = async (userId: number) => {
+  const result = await generateComprehensiveInsights(userId);
   return {
-    insights: result.insights.map(i => i.description),
+    insights: result.insights.map((i: Insight) => i.description),
     trends: result.trends
   };
 };
 
-export const getAlerts = (userId: number) => {
-  const result = generateComprehensiveInsights(userId);
+export const getAlerts = async (userId: number) => {
+  const result = await generateComprehensiveInsights(userId);
   return {
-    alerts: result.alerts.map(a => ({
+    alerts: result.alerts.map((a: Alert) => ({
       id: parseInt(a.id.split('_').pop() || '0'),
       message: a.message,
       type: a.type === 'critical' ? 'error' : a.type === 'warning' ? 'warning' : 'info'
