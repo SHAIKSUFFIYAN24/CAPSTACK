@@ -224,14 +224,6 @@ export default function Dashboard() {
     fetchDashboardData();
   }, [authLoading, isAuthenticated]);
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      router.push('/auth/login');
-      return;
-    }
-  }, [isAuthenticated, authLoading, router]);
-
   // Show loading while checking authentication
   if (authLoading) {
     return (
@@ -240,11 +232,6 @@ export default function Dashboard() {
         <Typography variant="h6">Loading...</Typography>
       </Container>
     );
-  }
-
-  // Don't render dashboard if not authenticated
-  if (!isAuthenticated) {
-    return null;
   }
 
   const handleRefresh = async () => {

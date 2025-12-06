@@ -43,12 +43,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             } else {
               // Token expired, remove it
               localStorage.removeItem("token");
+              // Set mock user for demo
+              setUser({
+                id: "demo",
+                email: "demo@capstack.com",
+                name: "Demo User"
+              });
             }
+          } else {
+            // Set mock user for demo
+            setUser({
+              id: "demo",
+              email: "demo@capstack.com",
+              name: "Demo User"
+            });
           }
+        } else {
+          // No token, set mock user for demo
+          setUser({
+            id: "demo",
+            email: "demo@capstack.com",
+            name: "Demo User"
+          });
         }
       } catch (error) {
         console.error("Auth initialization error:", error);
         localStorage.removeItem("token");
+        // Set mock user for demo
+        setUser({
+          id: "demo",
+          email: "demo@capstack.com",
+          name: "Demo User"
+        });
       } finally {
         setLoading(false);
       }

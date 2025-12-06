@@ -193,14 +193,6 @@ export default function Assessment() {
     riskTolerance: 5
   });
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      router.push('/auth/login');
-      return;
-    }
-  }, [isAuthenticated, authLoading, router]);
-
   // Show loading while checking authentication
   if (authLoading) {
     return (
@@ -209,11 +201,6 @@ export default function Assessment() {
         <Typography variant="h6">Loading...</Typography>
       </Container>
     );
-  }
-
-  // Don't render assessment if not authenticated
-  if (!isAuthenticated) {
-    return null;
   }
 
   const calculateAssessment = () => {

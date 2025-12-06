@@ -2,7 +2,7 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 
 // Create only ONE axios instance
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001",
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://capstack-2k25-backend.onrender.com" || "http://localhost:3001",
   withCredentials: true,
 });
 
@@ -31,19 +31,20 @@ api.interceptors.response.use(
       if (error?.response?.status === 401) {
         // eslint-disable-next-line no-console
         console.warn("axiosClient: received 401 Unauthorized from API", error.response?.config?.url);
+        // For demo mode, don't redirect to login
         // Clear stored token and redirect to login so the app can re-authenticate
-        try {
-          localStorage.removeItem("token");
-        } catch (e) {
-          // ignore
-        }
-        if (typeof window !== "undefined") {
-          // Avoid infinite redirect loops for auth routes
-          const pathname = window.location.pathname;
-          if (!pathname.startsWith("/auth")) {
-            window.location.href = "/auth/login";
-          }
-        }
+        // try {
+        //   localStorage.removeItem("token");
+        // } catch (e) {
+        //   // ignore
+        // }
+        // if (typeof window !== "undefined") {
+        //   // Avoid infinite redirect loops for auth routes
+        //   const pathname = window.location.pathname;
+        //   if (!pathname.startsWith("/auth")) {
+        //     window.location.href = "/auth/login";
+        //   }
+        // }
       }
     } catch (e) {
       // ignore logging errors
