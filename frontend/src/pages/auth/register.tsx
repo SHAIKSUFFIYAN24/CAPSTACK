@@ -47,16 +47,7 @@ export default function Register() {
   if (success) {
     return (
       <Container maxWidth="sm" sx={{ py: 8 }}>
-        <Paper
-          elevation={8}
-          sx={{
-            p: 4,
-            borderRadius: 3,
-            textAlign: 'center',
-            background: `linear-gradient(135deg, ${theme.palette.success.light}, ${theme.palette.success.main})`,
-            color: 'white'
-          }}
-        >
+        <Paper sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
             Registration Successful!
           </Typography>
@@ -70,14 +61,7 @@ export default function Register() {
 
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
-      <Paper
-        elevation={8}
-        sx={{
-          p: 4,
-          borderRadius: 3,
-          background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.grey[50]})`
-        }}
-      >
+      <Paper sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center" fontWeight="bold">
           Create Account
         </Typography>
