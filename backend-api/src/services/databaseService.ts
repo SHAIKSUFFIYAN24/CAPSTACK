@@ -148,7 +148,7 @@ export class DatabaseService {
    */
   static async getUserByEmailAndPin(email: string, pin: string): Promise<{ id: number; email: string; name: string } | null> {
     try {
-      const result = await query(`SELECT id, email, name FROM users WHERE email = $1 AND password = $2 LIMIT 1`, [email, pin]);
+      const result = await query(`SELECT id, email, name FROM users WHERE email = $1 AND pin = $2 LIMIT 1`, [email, pin]);
       if (result.rows.length > 0) {
         return result.rows[0];
       }
@@ -169,9 +169,9 @@ export class DatabaseService {
    */
   static async verifyUserPin(userId: number, pin: string): Promise<boolean> {
     try {
-      const result = await query(`SELECT password FROM users WHERE id = $1 LIMIT 1`, [userId]);
+      const result = await query(`SELECT pin FROM users WHERE id = $1 LIMIT 1`, [userId]);
       if (result.rows.length > 0) {
-        return result.rows[0].password === pin;
+        return result.rows[0].pin === pin;
       }
       return false;
     } catch (error) {
@@ -188,7 +188,7 @@ export class DatabaseService {
       logger.info(`Creating user with email: ${email}, name: ${name}, pin length: ${pin.length}`);
 
       const result = await query(
-        `INSERT INTO users (email, name, password, created_at, updated_at)
+        `INSERT INTO users (email, name, pin, created_at, updated_at)
          VALUES ($1, $2, $3, NOW(), NOW())
          RETURNING id`,
         [email, name, pin]
