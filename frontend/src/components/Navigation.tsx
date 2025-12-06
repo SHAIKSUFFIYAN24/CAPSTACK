@@ -26,12 +26,19 @@ import {
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/context/AuthContext';
 
 const Navigation = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/auth/login');
+  };
 
   const navItems = [
     { label: 'Dashboard', href: '/dashboard', icon: <Dashboard /> },
@@ -49,7 +56,7 @@ const Navigation = () => {
   const drawer = (
     <Box sx={{ width: 250 }}>
       <List>
-        {navItems.map((item) => (
+        {isAuthenticated && navItems.map((item) => (
           <ListItem key={item.href} disablePadding>
             <ListItemButton
               component={Link}
@@ -64,6 +71,35 @@ const Navigation = () => {
             </ListItemButton>
           </ListItem>
         ))}
+        {!isAuthenticated && (
+          <>
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                href="/auth/login"
+                onClick={handleDrawerToggle}
+              >
+                <ListItemText primary="Login" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                href="/auth/register"
+                onClick={handleDrawerToggle}
+              >
+                <ListItemText primary="Register" />
+              </ListItemButton>
+            </ListItem>
+          </>
+        )}
+        {isAuthenticated && (
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => { handleDrawerToggle(); handleLogout(); }}>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );
@@ -105,30 +141,57 @@ const Navigation = () => {
             </>
           ) : (
             <>
-              <Box sx={{ flexGrow: 1, display: 'flex', gap: 2 }}>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.href}
-                    component={Link}
-                    href={item.href}
-                    variant={router.pathname === item.href ? 'contained' : 'text'}
-                    startIcon={item.icon}
-                    sx={{
-                      color: router.pathname === item.href ? 'primary.contrastText' : 'text.primary',
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
+              {isAuthenticated && (
+                <Box sx={{ flexGrow: 1, display: 'flex', gap: 2 }}>
+                  {navItems.map((item) => (
+                    <Button
+                      key={item.href}
+                      component={Link}
+                      href={item.href}
+                      variant={router.pathname === item.href ? 'contained' : 'text'}
+                      startIcon={item.icon}
+                      sx={{
+                        color: router.pathname === item.href ? 'primary.contrastText' : 'text.primary',
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
+                </Box>
+              )}
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                {isAuthenticated ? (
+                  <>
+                    <Typography variant="body2" sx={{ alignSelf: 'center', mr: 1 }}>
+                      {user?.email}
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="outlined"
+                      component={Link}
+                      href="/auth/login"
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      variant="contained"
+                      component={Link}
+                      href="/auth/register"
+                    >
+                      Register
+                    </Button>
+                  </>
+                )}
               </Box>
-              <Button
-                variant="outlined"
-                startIcon={<Assessment />}
-                component={Link}
-                href="/onboarding"
-              >
-                Update Profile
-              </Button>
             </>
           )}
         </Toolbar>

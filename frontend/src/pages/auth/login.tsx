@@ -38,8 +38,12 @@ export default function Login() {
       const response = await api.post('/auth/login', formData);
       const { token } = response.data;
 
-      localStorage.setItem('token', token);
-      login({ email: formData.email }); // Set user in context
+      // Use the new login method with token and user data
+      login(token, {
+        id: "1",
+        email: formData.email,
+        name: "User"
+      });
 
       router.push('/dashboard');
     } catch (err: any) {
