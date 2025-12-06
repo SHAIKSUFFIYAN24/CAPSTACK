@@ -336,9 +336,54 @@ router.post("/asset-allocation/update", requireAuthMiddleware, async (req, res) 
 /* -------------------------------------------
    Emergency Fund Routes (Advanced Feature)
 -------------------------------------------- */
-router.get("/emergency-status", requireAuthMiddleware, async (req, res) => {
+router.get("/emergency-status", optionalAuthMiddleware, async (req, res) => {
   try {
     const userId = (req as any).userId;
+    const isGuest = (req as any).isGuest;
+
+    // Provide demo emergency fund data to guests/unauthenticated users so UI can render
+    if (!userId || isGuest) {
+      const guestExpenses = 31000;
+      const guestFund = 186000;
+
+      const emergencyStatus = EmergencyFundService.calculateEmergencyFundStatus(
+        guestFund,
+        guestExpenses
+      );
+
+      const simulations = EmergencyFundService.simulateEmergencyScenarios(
+        guestFund,
+        guestExpenses,
+        guestExpenses * 1.7
+      );
+
+      const optimalContribution = EmergencyFundService.calculateOptimalContribution(
+        guestFund,
+        guestExpenses,
+        guestExpenses * 1.7
+      );
+
+      const depletionRisk = EmergencyFundService.monitorDepletionRisk(
+        guestFund,
+        guestExpenses,
+        guestExpenses * 1.7,
+        7
+      );
+
+      return res.json({
+        status: emergencyStatus,
+        simulations,
+        optimalContribution,
+        depletionRisk,
+        recommendations: [
+          "Maintain emergency fund at 6 months of expenses",
+          "Contribute monthly to build fund gradually",
+          "Review and adjust based on life changes",
+        ],
+        isGuest: true,
+        note: "Demo emergency fund status. Sign up to save and track your own data.",
+      });
+    }
 
     const existingData = await DatabaseService.getEmergencyFundData(userId);
 
@@ -458,10 +503,35 @@ router.get("/emergency-status", requireAuthMiddleware, async (req, res) => {
   }
 });
 
-router.post("/emergency-simulation", requireAuthMiddleware, async (req, res) => {
+router.post("/emergency-simulation", optionalAuthMiddleware, async (req, res) => {
   try {
     const { scenario, currentBalance, monthlyExpenses, monthlyIncome } =
       req.body;
+
+    const userId = (req as any).userId;
+    const isGuest = (req as any).isGuest;
+
+    if (!userId || isGuest) {
+      const defaultBalance = currentBalance || 186000;
+      const defaultExpenses = monthlyExpenses || 31000;
+      const defaultIncome = monthlyIncome || defaultExpenses * 1.7;
+
+      const simulations = EmergencyFundService.simulateEmergencyScenarios(
+        defaultBalance,
+        defaultExpenses,
+        defaultIncome
+      );
+
+      const specificSimulation =
+        simulations.find((s) => s.scenario === scenario) || simulations[0];
+
+      return res.json({
+        simulation: specificSimulation,
+        allScenarios: simulations,
+        isGuest: true,
+        note: "Demo simulation. Sign up to run simulations on your own data.",
+      });
+    }
 
     const simulations = EmergencyFundService.simulateEmergencyScenarios(
       currentBalance,
