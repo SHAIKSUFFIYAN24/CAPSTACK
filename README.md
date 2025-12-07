@@ -1,6 +1,3 @@
-
-
-````markdown
 # 🏦 CAPSTACK — AI-Powered Personal Finance Platform
 
 **International Hackathon Edition** | Intelligent Financial Health Management System
