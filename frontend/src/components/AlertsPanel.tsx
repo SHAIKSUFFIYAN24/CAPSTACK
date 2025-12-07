@@ -29,7 +29,7 @@ import {
   TrendingUp,
   TrendingDown,
   Bolt,
-  Calendar,
+  Event,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
@@ -221,7 +221,7 @@ export default function AlertsPanel({ alerts, onAction }: AlertsPanelProps) {
                   </Typography>
                   {alert.timestamp && (
                     <Stack direction="row" alignItems="center" spacing={0.5} sx={{ mt: 1 }}>
-                      <Calendar sx={{ fontSize: 14, opacity: 0.6 }} />
+                      <Event sx={{ fontSize: 14, opacity: 0.6 }} />
                       <Typography
                         variant="caption"
                         sx={{ display: 'block', opacity: 0.7, fontSize: '0.75rem' }}
@@ -310,7 +310,7 @@ export default function AlertsPanel({ alerts, onAction }: AlertsPanelProps) {
                               color="text.secondary"
                               sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}
                             >
-                              <Calendar sx={{ fontSize: 12 }} />
+                              <Event sx={{ fontSize: 12 }} />
                               {alert.timestamp}
                             </Typography>
                           )

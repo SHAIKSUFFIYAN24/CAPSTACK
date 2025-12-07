@@ -264,19 +264,18 @@ const Navigation = () => {
               {isAuthenticated && (
                 <Box sx={{ flexGrow: 1, display: 'flex', gap: 0.5 }}>
                   {navItems.map((item) => (
-                    <NavButton
-                      key={item.href}
-                      component={Link}
-                      href={item.href}
-                      startIcon={item.icon}
-                      className={router.pathname === item.href ? 'active' : ''}
-                      sx={{
-                        color: router.pathname === item.href ? 'primary.main' : 'text.primary',
-                        fontWeight: router.pathname === item.href ? 600 : 500,
-                      }}
-                    >
-                      {item.label}
-                    </NavButton>
+                    <Link key={item.href} href={item.href} style={{ textDecoration: 'none' }}>
+                      <NavButton
+                        startIcon={item.icon}
+                        className={router.pathname === item.href ? 'active' : ''}
+                        sx={{
+                          color: router.pathname === item.href ? 'primary.main' : 'text.primary',
+                          fontWeight: router.pathname === item.href ? 600 : 500,
+                        }}
+                      >
+                        {item.label}
+                      </NavButton>
+                    </Link>
                   ))}
                 </Box>
               )}

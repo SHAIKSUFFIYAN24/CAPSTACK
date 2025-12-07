@@ -17,7 +17,7 @@ import {
   TrendingUp as TrendingUpIcon, 
   Warning as WarningIcon,
   CheckCircle as CheckCircleIcon,
-  Lightning as LightningIcon
+  Bolt as BoltIcon
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
@@ -141,7 +141,7 @@ export default function HealthScoreCard({ score, category }: HealthScoreCardProp
       return {
         color: 'warning',
         label: 'At Risk',
-        icon: <LightningIcon fontSize="small" />,
+        icon: <BoltIcon fontSize="small" />,
         className: 'warning',
       };
     }
@@ -265,11 +265,5 @@ export default function HealthScoreCard({ score, category }: HealthScoreCardProp
         </Alert>
       </CardContent>
     </StyledCard>
-  );
-}
-        </Alert>
-
-      </CardContent>
-    </Card>
   );
 }

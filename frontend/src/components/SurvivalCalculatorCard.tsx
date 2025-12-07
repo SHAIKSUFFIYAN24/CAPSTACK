@@ -12,9 +12,9 @@ import {
   Tooltip,
 } from '@mui/material';
 import {
-  Emergency as EmergencyIcon,
+  ErrorOutline as EmergencyIcon,
   TrendingDown as TrendingDownIcon,
-  Calendar as CalendarIcon,
+  Event as CalendarIcon,
   AttachMoney as AttachMoneyIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';

@@ -73,7 +73,7 @@ export default function IncomeExpenseForm({
   const incomeNum = income ? parseFloat(income) : 0;
   const expensesNum = expenses ? parseFloat(expenses) : 0;
   const savings = incomeNum - expensesNum;
-  const savingsRate = incomeNum > 0 ? ((savings / incomeNum) * 100).toFixed(1) : 0;
+  const savingsRate = incomeNum > 0 ? parseFloat(((savings / incomeNum) * 100).toFixed(1)) : 0;
 
   const validateForm = (): boolean => {
     const newErrors: { income?: string; expenses?: string } = {};

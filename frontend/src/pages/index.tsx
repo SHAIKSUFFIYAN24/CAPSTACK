@@ -25,8 +25,8 @@ import {
   Psychology,
   ArrowForward,
   Shield,
-  LineChart,
-  Zap,
+  BarChart,
+  Bolt,
   Check,
   Star
 } from '@mui/icons-material';
@@ -191,7 +191,7 @@ export default function Home() {
               <Stack spacing={3}>
                 <Box>
                   <Chip 
-                    icon={<Zap sx={{ fontSize: 16 }} />}
+                    icon={<Bolt sx={{ fontSize: 16 }} />}
                     label="AI-Powered Financial Defense" 
                     sx={{
                       mb: 3,
@@ -293,7 +293,7 @@ export default function Home() {
                   borderTop: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
                 }}
               >
-                <StatBox number="4k+" label="Jobs Tracked" icon={<LineChart />} />
+                <StatBox number="4k+" label="Jobs Tracked" icon={<BarChart />} />
                 <StatBox number="24/7" label="AI Monitoring" icon={<Shield />} />
                 <StatBox number="100%" label="Transparent" icon={<Check />} />
               </Stack>
@@ -366,7 +366,7 @@ export default function Home() {
                           justifyContent: 'center',
                           color: 'primary.main',
                         }}>
-                          <LineChart fontSize="small" />
+                          <BarChart fontSize="small" />
                         </Box>
                         <Typography variant="subtitle2" fontWeight="700">Health Score</Typography>
                       </Stack>
