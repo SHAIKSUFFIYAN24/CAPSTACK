@@ -261,7 +261,7 @@ export default function Insights() {
             >
               <Box>
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                  Demo Mode – Create an Account for Personalized Insights
+                  Demo Mode &ndash; Create an Account for Personalized Insights
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   You&apos;re viewing demo financial insights. Sign up to get personalized analysis of your actual financial data.
