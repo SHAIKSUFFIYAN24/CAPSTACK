@@ -613,12 +613,37 @@ If you see **"Connection Error - Please fill in all fields"**:
 
 ---
 
+## 📁 Project Outputs & Deliverables
+
+The `/output` folder contains comprehensive demonstration materials:
+
+### 🎬 Demo Video
+- **`00-DEMO-VIDEO.mkv`** - Complete application walkthrough showcasing all features in action
+
+### 📸 Screenshots (`/output/screenshots`)
+- **01-Authentication.png** - Login and authentication flow
+- **02-Account-Creation.png** - User registration and onboarding process
+- **03-Backend-Architecture.png** - System architecture and API design diagram
+
+### 📄 Page PDFs (`/output/page-pdfs`)
+High-quality PDF captures of all application pages:
+- **01-Homepage.pdf** - Landing page with hero section and features overview
+- **02-Dashboard.pdf** - Main financial dashboard with analytics
+- **03-Asset-Allocation.pdf** - AI-powered asset allocation engine
+- **04-Financial-Assessment.pdf** - Comprehensive financial health assessment
+- **05-Emergency-Fund.pdf** - Emergency fund planning and monitoring tools
+- **06-Savings-Plan.pdf** - Savings goals and automated tracking system
+- **07-Financial-Insights.pdf** - AI-powered financial recommendations and insights
+
+---
+
 ## 📞 Support
 
 - **Issues & Bugs**: GitHub Issues
 - **Feature Requests**: GitHub Discussions
 - **Documentation**: See `/docs` folder
 - **Deployment Help**: Check Render logs
+- **Demo Materials**: Check `/output` folder
 
 ---
 
