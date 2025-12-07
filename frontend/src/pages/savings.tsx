@@ -181,14 +181,18 @@ export default function Savings() {
         lock_percentage: 80,
         target_date: ''
       });
+      setError(null); // Clear any previous errors
       fetchSavingsData(); // Refresh data
     } catch (err) {
       const e: any = err;
       if (e?.response?.status === 401) {
         setError('Please sign in to create plans');
+      } else if (e?.response?.status === 400) {
+        setError(e?.response?.data?.error || 'Invalid plan data. Please check your inputs.');
       } else {
-        console.error('Failed to create plan:', err);
+        setError(`Failed to create plan: ${e?.response?.data?.error || 'Unknown error'}`);
       }
+      console.error('Failed to create plan:', err);
     }
   };
 
@@ -494,9 +498,10 @@ export default function Savings() {
         </Box>
 
         {/* Create Plan Dialog */}
-        <Dialog open={createPlanDialogOpen} onClose={() => setCreatePlanDialogOpen(false)} maxWidth="sm" fullWidth>
+        <Dialog open={createPlanDialogOpen} onClose={() => setCreatePlanDialogOpen(false)} maxWidth="sm" fullWidth disableEnforceFocus>
           <DialogTitle>Create Savings Plan</DialogTitle>
           <DialogContent>
+            {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
               <TextField
                 label="Plan Name"
