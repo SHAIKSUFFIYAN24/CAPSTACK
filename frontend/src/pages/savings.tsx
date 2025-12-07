@@ -132,10 +132,13 @@ export default function Savings() {
       fetchSavingsData(); // Refresh data
     } catch (err) {
       const e: any = err;
-      if (e?.response?.status === 401) {
-        setError('Please sign in');
+      if (e?.response?.status === 403) {
+        setError('This feature requires a full account. Please sign in with your email.');
+      } else if (e?.response?.status === 401) {
+        setError('Please sign in to lock savings');
       } else {
         console.error('Failed to lock savings:', err);
+        setError('Failed to lock savings. Please try again.');
       }
     }
   };
@@ -146,10 +149,13 @@ export default function Savings() {
       fetchSavingsData(); // Refresh data
     } catch (err) {
       const e: any = err;
-      if (e?.response?.status === 401) {
-        setError('Please sign in');
+      if (e?.response?.status === 403) {
+        setError('This feature requires a full account. Please sign in with your email.');
+      } else if (e?.response?.status === 401) {
+        setError('Please sign in to unlock savings');
       } else {
         console.error('Failed to unlock savings:', err);
+        setError('Failed to unlock savings. Please try again.');
       }
     }
   };
