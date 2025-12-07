@@ -172,10 +172,11 @@ export default function Allocation() {
       setRequiresRegistration(false);
 
       const backendUrl = api.defaults.baseURL || 'https://capstack-2k25-backend.onrender.com';
-      console.log('Fetching allocation from:', `${backendUrl}/finance/asset-allocation`);
+      const endpoint = '/finance/asset-allocation';
+      console.log('Fetching allocation from:', `${backendUrl}${endpoint}`);
       
       try {
-        const response = await api.get('/finance/asset-allocation');
+        const response = await api.get(endpoint);
 
         // Backend returned an error format
         if (response.data?.error || response.data?.message || response.data?.success === false) {

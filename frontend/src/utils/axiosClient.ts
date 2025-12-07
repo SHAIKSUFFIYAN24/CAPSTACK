@@ -3,11 +3,19 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 // Create only ONE axios instance
 // Production backend: https://capstack-2k25-backend.onrender.com
 // Local development: http://localhost:3001
-const BACKEND_BASE_URL = 
-  process.env.NEXT_PUBLIC_BACKEND_URL || 
-  (typeof window !== "undefined" && window.location.hostname === "localhost" 
-    ? "http://localhost:3001" 
-    : "https://capstack-2k25-backend.onrender.com");
+let baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+// If no env variable, detect environment
+if (!baseURL && typeof window !== "undefined") {
+  if (window.location.hostname === "localhost") {
+    baseURL = "http://localhost:3001";
+  } else {
+    baseURL = "https://capstack-2k25-backend.onrender.com";
+  }
+}
+
+// Ensure no trailing slash
+const BACKEND_BASE_URL = baseURL ? baseURL.replace(/\/$/, "") : "https://capstack-2k25-backend.onrender.com";
 
 const api = axios.create({
   baseURL: BACKEND_BASE_URL,
