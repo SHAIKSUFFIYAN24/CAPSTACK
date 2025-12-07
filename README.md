@@ -2,7 +2,7 @@
 
 ## AI-Powered Personal Finance & Wealth Management Platform
 
-[![Production Ready](https://img.shields.io/badge/Status-Production-brightgreen?style=for-the-badge)](https://capstack-2k25.onrender.com)
+[![Production Ready](https://img.shields.io/badge/Status-Production-brightgreen?style=for-the-badge)](https://capstack-2k25-frontend.onrender.com)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Node.js 18+](https://img.shields.io/badge/Node.js-18%2B-green?style=for-the-badge)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge)](https://www.typescriptlang.org)
@@ -19,7 +19,7 @@ CAPSTACK is a production-ready, full-stack personal finance platform that combin
 
 Designed for modern users who need more than transaction tracking—they need guidance, predictions, and intelligent automation to optimize their financial health.
 
-**Live Demo:** [capstack-2k25.onrender.com](https://capstack-2k25.onrender.com)
+**Live Demo:** [https://capstack-2k25-frontend.onrender.com](https://capstack-2k25-frontend.onrender.com)
 
 ---
 
@@ -194,14 +194,14 @@ POST   /api/savings/plans                    # Create plan
 
 ## 🎬 Demo & Documentation
 
-- **Live Application**: [https://capstack-2k25.onrender.com](https://capstack-2k25.onrender.com)
+- **Live Application**: [https://capstack-2k25-frontend.onrender.com](https://capstack-2k25-frontend.onrender.com)
 - **Backend API**: [https://capstack-2k25-backend.onrender.com/health](https://capstack-2k25-backend.onrender.com/health)
 - **Demo Video**: `/output/00-DEMO-VIDEO.mkv`
 - **Screenshots**: `/output/screenshots/`
 - **Page PDFs**: `/output/page-pdfs/`
 
 ### Demo Account
-- **URL**: https://capstack-2k25.onrender.com
+- **URL**: https://capstack-2k25-frontend.onrender.com
 - **Mode**: Use "Guest" mode to explore full functionality
 - **Note**: Create an account with any email to save your data
 
@@ -231,19 +231,6 @@ npm run build
 - 85%+ test coverage
 - A+ security score (SSL Labs)
 - <200ms API response time
-
----
-
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE)
-
-### Compliance
-- GDPR compliant
-- WCAG 2.1 AA accessibility
-- JWT security
-- Encrypted passwords (bcrypt)
-- HTTPS-only
 
 ---
 
@@ -293,6 +280,6 @@ Powered by:
 
 Building intelligent financial wellness solutions
 
-[View Live Demo](https://capstack-2k25.onrender.com) • [GitHub](https://github.com/Abdul9010150809/CAPSTACK-2k25) • [Report Issues](https://github.com/Abdul9010150809/CAPSTACK-2k25/issues)
+[View Live Demo](https://capstack-2k25-frontend.onrender.com) • [GitHub](https://github.com/Abdul9010150809/CAPSTACK-2k25) • [Report Issues](https://github.com/Abdul9010150809/CAPSTACK-2k25/issues)
 
 </div>
