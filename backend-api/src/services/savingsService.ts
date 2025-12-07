@@ -184,15 +184,31 @@ export const getSavingsStatus = async (userId: number) => {
 
 export const createSavingsPlan = async (userId: number, plan: any) => {
   try {
+    // Validate userId
+    if (!userId) {
+      throw new Error('User ID is required to create a savings plan');
+    }
+
     // Convert snake_case from frontend to the format we need
     const planData = {
-      name: plan.name || plan.name,
-      targetAmount: plan.target_amount ?? plan.targetAmount ?? 0,
-      currentAmount: plan.current_amount ?? plan.currentAmount ?? 0,
-      monthlyContribution: plan.monthly_contribution ?? plan.monthlyContribution ?? 0,
-      lockPercentage: (plan.lock_percentage ?? plan.lockPercentage ?? 80) / 100, // Convert percentage to decimal
+      name: plan.name || '',
+      targetAmount: parseFloat(plan.target_amount || plan.targetAmount || 0),
+      currentAmount: parseFloat(plan.current_amount || plan.currentAmount || 0),
+      monthlyContribution: parseFloat(plan.monthly_contribution || plan.monthlyContribution || 0),
+      lockPercentage: (parseFloat(plan.lock_percentage || plan.lockPercentage || 80)) / 100, // Convert percentage to decimal
       targetDate: plan.target_date || plan.targetDate || null
     };
+
+    // Validate required fields
+    if (!planData.name) {
+      throw new Error('Plan name is required');
+    }
+    if (planData.targetAmount <= 0) {
+      throw new Error('Target amount must be greater than 0');
+    }
+    if (planData.monthlyContribution < 0) {
+      throw new Error('Monthly contribution cannot be negative');
+    }
 
     const result = await query(`
       INSERT INTO savings_plans (
@@ -216,6 +232,10 @@ export const createSavingsPlan = async (userId: number, plan: any) => {
       planData.targetDate
     ]);
 
+    if (!result.rows || result.rows.length === 0) {
+      throw new Error('Failed to insert savings plan - no rows returned');
+    }
+
     const newPlan = result.rows[0];
     logger.info(`Created savings plan "${planData.name}" for user ${userId}`);
 
@@ -232,9 +252,9 @@ export const createSavingsPlan = async (userId: number, plan: any) => {
       },
       autoLockScheduled: planData.lockPercentage > 0
     };
-  } catch (error) {
-    logger.error(`Failed to create savings plan for user ${userId}: ${error}`);
-    throw new Error(`Failed to create savings plan: ${error}`);
+  } catch (error: any) {
+    logger.error(`Failed to create savings plan for user ${userId}: ${error.message}`);
+    throw new Error(`Failed to create savings plan: ${error.message}`);
   }
 };
 

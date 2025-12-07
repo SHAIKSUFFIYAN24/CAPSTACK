@@ -39,10 +39,20 @@ export const createPlan = async (req: Request, res: Response) => {
   
   try {
     const planData = req.body;
+    
+    // Validate input
+    if (!planData.name || !planData.target_amount) {
+      return res.status(400).json({ 
+        error: 'Name and target amount are required' 
+      });
+    }
+
     const result = await createSavingsPlan(userId, planData);
     res.json(result);
   } catch (error: any) {
-    res.status(500).json({ error: error.message || 'Failed to create savings plan' });
+    const errorMessage = error.message || 'Failed to create savings plan';
+    console.error('Create plan error:', errorMessage, error);
+    res.status(500).json({ error: errorMessage });
   }
 };
 
