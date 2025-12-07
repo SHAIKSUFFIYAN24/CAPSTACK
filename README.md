@@ -524,6 +524,70 @@ To be added.
 
 ## 🎯 Getting Started
 
+### ⚡ Quick Start (5 minutes)
+
+#### Option 1: Try Live Demo
+```bash
+# Visit the live application
+https://capstack-2k25-frontend.onrender.com/
+
+# Use guest mode to explore without signup
+# Or create an account for personalized experience
+```
+
+#### Option 2: Local Development
+
+**Prerequisites**: Node.js 18+, npm
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Abdul9010150809/CAPSTACK-2k25.git
+cd CAPSTACK-2k25
+
+# 2. Setup backend
+cd backend-api
+cp .env.example .env
+npm install
+npm run build
+npm run dev  # Runs on http://localhost:3001
+
+# 3. In another terminal, setup frontend
+cd frontend
+cp .env.example .env.local
+npm install
+npm run dev  # Runs on http://localhost:3000
+
+# 4. Open browser to http://localhost:3000
+```
+
+### 📚 Complete Setup Guides
+
+- **[Local Development Guide](./SETUP_GUIDE.md)** - Full local development setup
+- **[Deployment Guide](./DEPLOYMENT_GUIDE.md)** - Deploy to Render.com or similar
+
+### 🐛 Troubleshooting Connection Error
+
+If you see **"Connection Error - Please fill in all fields"**:
+
+1. **Check Backend URL**
+   - Frontend should connect to: `https://capstack-2k25-backend.onrender.com`
+   - Set `NEXT_PUBLIC_BACKEND_URL` environment variable
+
+2. **Verify Backend is Running**
+   ```bash
+   curl https://capstack-2k25-backend.onrender.com/health
+   ```
+   Should return: `{"status":"ok", "message":"Backend API running successfully"}`
+
+3. **Check CORS Configuration**
+   - Backend must allow frontend origin
+   - Frontend must make requests to correct backend URL
+
+4. **Local Development Issues**
+   - Ensure backend runs on `http://localhost:3001`
+   - Ensure frontend runs on `http://localhost:3000`
+   - Check environment variables in `.env` files
+
 ### For Users
 1. Visit https://capstack-2k25-frontend.onrender.com/
 2. Create an account or try guest mode
@@ -532,10 +596,10 @@ To be added.
 
 ### For Developers
 1. Clone the repository
-2. Set up development environment
-3. Follow development setup guide above
-4. Read component documentation in `/docs`
-5. Check API docs at backend service
+2. Set up development environment (see SETUP_GUIDE.md)
+3. Read component documentation in `/docs`
+4. Check API docs at `backend-api/FINANCE_API.md`
+5. Explore `/database` for schema and migrations
 
 ---
 
