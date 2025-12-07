@@ -4,11 +4,7 @@
 [![UI/UX](https://img.shields.io/badge/UI%2FUX-Premium-blue?style=flat-square)](https://capstack-2k25-frontend.onrender.com/)
 [![Stack](https://img.shields.io/badge/Stack-MERN%20%2B%20FastAPI-blueviolet?style=flat-square)](https://nodejs.org)
 
-## 📁 Project Outputs & Deliverables
-Comprehensive demonstration materials are available in the `/output` directory:
-  * **🎬 Demo Video**: `00-DEMO-VIDEO.mkv` - Complete application walkthrough.
-  * **📸 Screenshots**: High-res captures of the Authentication and Dashboard flows.
-  * **📄 Page PDFs**: Detailed PDF captures of the Financial Assessment and Insights pages.
+
 > **"Build Your Safety Net Before the Market Shifts"**
 CAPSTACK is a comprehensive multi-service platform designed to democratize financial wellness. By combining full-stack architecture with AI/ML predictive modeling, we provide users with actionable insights, automated savings protocols, and intelligent analytics. 
 
