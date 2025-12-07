@@ -1,336 +1,511 @@
-🏦 CAPSTACK — Datanyx Hackathon Edition
-💰 AI-Powered Personal Financial Health Management Platform
+# 🏦 CAPSTACK — AI-Powered Personal Finance Platform
 
-Built for the Datanyx Hackathon, CAPSTACK is a multi-service monorepo designed to help individuals take control of their financial health, powered by AI/ML insights, automated savings, and intelligent personal finance analytics.
+**Datanyx Hackathon Edition** | Intelligent Financial Health Management System
 
-🌍 Real-World Problem
+CAPSTACK is a comprehensive multi-service platform designed to help individuals achieve financial wellness through AI/ML insights, automated savings, and intelligent analytics.
 
-Managing money is becoming increasingly complex:
+---
 
-❗ People struggle to track income and expenses
-❗ Emergency funds are usually insufficient
-❗ Savings are inconsistent due to behavior and lack of discipline
-❗ Financial literacy is low
-❗ There is no easy way to measure financial health
-❗ Traditional budgeting apps only track – they don’t predict or help users take proactive actions
-❗ No system provides customized survival prediction or locking mechanisms for saving discipline
+## 📋 Table of Contents
 
-🔐 Result: People end up with poor savings habits, financial stress, and limited visibility into future risks.
+1. [Problem Statement](#problem-statement)
+2. [Solution Overview](#solution-overview)
+3. [Key Features](#key-features)
+4. [Technology Stack](#technology-stack)
+5. [System Architecture](#system-architecture)
+6. [Project Structure](#project-structure)
+7. [Development Setup](#development-setup)
+8. [API Documentation](#api-documentation)
+9. [Live Deployment](#live-deployment)
+10. [Contributing](#contributing)
 
-🚀 Our Solution — CAPSTACK
+---
 
-A powerful AI-powered financial wellness platform that:
+## 🌍 Problem Statement
 
-✔ Tracks income & expenses
-✔ Automates smart savings with lock periods
-✔ Calculates financial health scores
-✔ Predicts survival days during emergencies
-✔ Gives real-time personalized financial insights
-✔ Provides dashboards to visualize financial progress
+Modern financial management faces critical challenges:
 
-📖 Overview
+- **Tracking Challenges**: People struggle to manage income, expenses, and savings effectively
+- **Emergency Fund Gaps**: Most people lack adequate emergency reserves (3-6 months)
+- **Behavioral Issues**: Savings are inconsistent due to lack of discipline and accountability
+- **Low Financial Literacy**: Difficult to understand financial health metrics
+- **Reactive Tools**: Traditional apps only track—they don't predict or guide proactively
+- **No Survival Prediction**: Users can't measure how long they'd survive financially
 
-CAPSTACK integrates multiple services to deliver intelligent finance management through:
+**Result**: Poor savings habits, financial stress, and vulnerability to emergencies.
 
-🧠 AI-based ML insights
-📊 Interactive financial dashboards
-🔒 Smart savings lock mechanisms
-💵 Expense & income analytics
-⚡ Real-time backend API processing
+---
 
-🏗️ System Architecture
-                        ┌─────────────────────────┐
-                        │         User            │
-                        │     Web Dashboard       │
-                        └───────────┬─────────────┘
-                                    │
-                             Frontend (Next.js)
-                                    │
-                    ┌───────────────▼────────────────┐
-                    │       Backend API (Node.js)     │
-                    │ - Income/Expense Management      │
-                    │ - Savings Lock Engine            │
-                    │ - User Auth + JWT                │
-                    │ - Financial Calculations          │
-                    └───────────────┬────────────────┘
-                                    │
-                         ┌──────────▼───────────┐
-                         │      ML Service       │
-                         │  - Health Score ML    │
-                         │  - Survival Forecast   │
-                         │  - Prediction Models   │
-                         └──────────┬────────────┘
-                                    │
-                         ┌──────────▼───────────┐
-                         │    Database Layer      │
-                         │ - Users                │
-                         │ - Expenses             │
-                         │ - Income               │
-                         │ - Health Scores        │
-                         └────────────────────────┘
+## ✨ Solution Overview
 
-🔄 Workflow (End-to-End Finance Processing)
-Step 1 — User Adds Financial Data
+CAPSTACK provides an intelligent financial wellness platform with:
 
-Income, expenses, savings, or goals
+- ✅ **Real-time Tracking**: Income and expense management
+- ✅ **Smart Savings**: Automated savings with intelligent lock mechanisms
+- ✅ **Financial Health Score**: AI-powered comprehensive wellness metric
+- ✅ **Survival Prediction**: Forecasts days you could survive financially
+- ✅ **AI Insights**: Machine learning powered recommendations
+- ✅ **Interactive Dashboard**: Real-time financial visualization
+- ✅ **Asset Allocation**: Personalized investment recommendations
 
-Step 2 — Backend API Processes Data
+---
 
-Validates
-Stores
-Calculates basic metrics
+## 📊 Key Features
 
-Step 3 — ML Service Extracts Features
+| Feature | Description | Benefit |
+|---------|-------------|---------|
+| 🧠 **AI Health Score** | ML-powered financial wellness metric | Know your financial health instantly |
+| 📈 **Survival Prediction** | Days you can survive without income | Emergency readiness awareness |
+| 💰 **Smart Savings Lock** | Automated savings with discipline | Force good savings behavior |
+| 📊 **Expense Analytics** | Categorized spending with trends | Identify savings opportunities |
+| 🎯 **Asset Allocation** | AI-recommended portfolio allocation | Optimize investment strategy |
+| 📋 **Savings Plans** | Create and track financial goals | Achieve target amounts |
+| ⚠️ **Real-time Alerts** | Financial health notifications | Stay informed of changes |
+| 🌐 **Guest Demo Mode** | Try platform without signup | Risk-free exploration |
 
-✔ Saving behavior
-✔ Spending categories
-✔ Past patterns
-✔ Monthly trends
+---
 
-Step 4 — ML Model Generates Scores
+## 🏗️ System Architecture
 
-Isolation Forest & regression techniques compute:
+```
+┌─────────────────────────────────────┐
+│      User Browser/Mobile            │
+│   Frontend Dashboard (Next.js)       │
+└────────────────┬────────────────────┘
+                 │
+                 │ API Calls (REST)
+                 ▼
+┌─────────────────────────────────────┐
+│     Backend API (Node.js)           │
+│  - Auth & JWT Management            │
+│  - Income/Expense Processing        │
+│  - Savings Lock Engine              │
+│  - Financial Calculations           │
+│  - ML Model Integration             │
+└────────────────┬────────────────────┘
+                 │
+        ┌────────┴──────────┐
+        │                   │
+        ▼                   ▼
+   ┌─────────────┐    ┌──────────────┐
+   │     ML      │    │  PostgreSQL  │
+   │   Service   │    │  + Redis     │
+   │  (FastAPI)  │    │  (Database)  │
+   └─────────────┘    └──────────────┘
 
-Financial health score
+ML Pipeline:
+  Data → Feature Engineering → ML Models → Scores → Backend → Dashboard
+```
 
-Survival prediction (in days)
+---
 
-Step 5 — Backend Enhances Score
+## 📁 Project Structure
 
-Combines ML score with rule-based scoring:
+```
+CAPSTACK-2k25/
+├── backend-api/              # Node.js + Express + TypeScript
+│   ├── src/
+│   │   ├── controllers/      # Business logic
+│   │   ├── services/         # Feature services
+│   │   ├── routes/           # API endpoints
+│   │   ├── middleware/       # Auth & validation
+│   │   └── models/           # Data models
+│   └── package.json
+│
+├── frontend/                 # Next.js + React + TypeScript
+│   ├── src/
+│   │   ├── pages/           # Page components
+│   │   ├── components/      # Reusable components
+│   │   ├── context/         # State management
+│   │   ├── services/        # API clients
+│   │   └── utils/           # Helper functions
+│   └── package.json
+│
+├── ml-service/              # FastAPI + Python
+│   ├── app/
+│   │   ├── main.py         # API entry
+│   │   ├── models/         # ML models
+│   │   └── schemas.py      # Data schemas
+│   └── requirements.txt
+│
+├── database/                # SQL schemas
+│   ├── migrations/          # Schema definitions
+│   └── seed/               # Initial data
+│
+├── infra/                   # Deployment configs
+│   ├── docker-compose.yml
+│   ├── nginx.conf
+│   └── render.yaml
+│
+├── docs/                    # Documentation
+│   ├── Project_Report.txt
+│   ├── SRS_Document.txt
+│   └── User_Manual.txt
+│
+└── analytics/               # ML notebooks & reports
+    └── notebooks/
+```
 
-Expense ratio
+---
 
-Debt ratio
+## 🛠️ Technology Stack
 
-Savings frequency
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Frontend** | Next.js 14 + TypeScript | Web dashboard UI |
+| | Material UI | Component library |
+| | Axios | HTTP client |
+| **Backend** | Node.js 18+ | Runtime |
+| | Express | Web framework |
+| | TypeScript | Type safety |
+| | JWT | Authentication |
+| **Database** | PostgreSQL | Main datastore |
+| | Redis | Caching & sessions |
+| **ML** | FastAPI | API serving |
+| | Scikit-learn | ML algorithms |
+| | Pandas | Data processing |
+| **DevOps** | Docker | Containerization |
+| | GitHub Actions | CI/CD |
+| | Render | Cloud hosting |
 
-Income stability
+---
 
-Step 6 — Dashboard Updates
+## 💻 Development Setup
 
-Frontend fetches:
+### Prerequisites
 
-Health score
+- **Node.js**: 18+ (with npm)
+- **Python**: 3.11+
+- **Docker & Docker Compose**
+- **PostgreSQL**: 14+
+- **Redis**: 7+
+- **Git**: 2.30+
 
-Insights
+### Quick Start with Docker
 
-Graphs
+```bash
+cd CAPSTACK-2k25
 
-Predictions
-
-Recommendations
-
-📁 Project Structure
-CAPSTACK/
-├── backend-api/          # Node.js Express API (TypeScript)
-├── ml-service/           # FastAPI ML service
-├── frontend/             # Next.js React dashboard
-├── database/             # SQL migrations & seeds
-├── infra/                # Docker & deployment configs
-├── analytics/            # Jupyter notebooks, ML reports
-├── docs/                 # PDFs & documentation
-└── .gitignore
-
-🧰 Technology Stack
-Technology	Usage	Component
-Node.js + TS	Core backend API	Backend
-FastAPI	ML model serving	ML Service
-PostgreSQL	Main database	Backend
-Redis	Caching & session store	Backend
-Next.js + TS	Web dashboard UI	Frontend
-Material UI	UI components	Frontend
-Scikit-learn	ML models	ML Service
-Pandas	Feature engineering	ML Service
-Docker	Service containerization	Infra
-Kubernetes	Scalable deployment	Infra
-Terraform	Infrastructure as Code	Infra
-GitHub Actions	CI/CD automation	CI/CD
-⚙️ Development Setup
-🧩 Prerequisites
-
-Node.js 18+
-
-Python 3.11+
-
-Docker & Docker Compose
-
-PostgreSQL & Redis (or use Docker)
-
-⚡ Quick Start with Docker
-cd CAPSTACK
+# Build and start all services
 docker-compose -f infra/docker-compose.yml up --build
 
-Access Services:
+# Access services:
+# Frontend:  http://localhost:3001
+# Backend:   http://localhost:3000/
+# ML Service: http://localhost:8000/docs
+```
 
-Frontend: http://localhost:3001
+### Manual Setup
 
-Backend API: http://localhost:3000
+#### Backend API
 
-ML Service: http://localhost:8000
-
-🛠️ Manual Setup
-Backend API
+```bash
 cd backend-api
+
+# Install dependencies
 npm install
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your settings
+
+# Start development server
 npm run dev
 
-ML Service
-cd ml-service
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+# Production build
+npm run build
+npm run start
+```
 
-Frontend
+#### Frontend
+
+```bash
 cd frontend
+
+# Install dependencies
 npm install
+
+# Configure environment
+cp .env.example .env.local
+# Edit .env.local with your settings
+
+# Start development server
 npm run dev
 
-🔐 Environment Variables
-backend-api/.env
+# Production build
+npm run build
+npm run start
+```
+
+#### ML Service
+
+```bash
+cd ml-service
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start development server
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### Environment Variables
+
+**backend-api/.env**
+```bash
 PORT=3000
+NODE_ENV=development
 DATABASE_URL=postgresql://user:password@localhost:5432/capstack
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRY=24h
 REDIS_URL=redis://localhost:6379
+FRONTEND_URL=http://localhost:3001
+```
 
-frontend/.env.local
+**frontend/.env.local**
+```bash
 NEXT_PUBLIC_BACKEND_URL=http://localhost:3000
-NEXT_PUBLIC_ML_URL=http://localhost:8000
+NEXT_PUBLIC_API_TIMEOUT=10000
+```
 
-📚 API Documentation
+---
 
-Backend API Docs → /docs
+## 🔗 API Documentation
 
-ML Service Docs → /docs
+### Backend API
 
-🧪 Testing
+The backend provides RESTful endpoints for all financial operations.
+
+**Live Documentation**: https://capstack-2k25-backend.onrender.com/
+
+**Key Endpoints**:
+
+| Endpoint | Method | Auth | Purpose |
+|----------|--------|------|---------|
+| `/auth/register` | POST | ❌ | Create account |
+| `/auth/login` | POST | ❌ | Login user |
+| `/auth/guest` | POST | ❌ | Guest access |
+| `/finance/healthscore` | GET | ✅ | Financial health score |
+| `/finance/survival` | GET | ✅ | Survival prediction |
+| `/finance/insights` | GET | ✅ | AI recommendations |
+| `/finance/asset-allocation` | GET | ✅ | Investment allocation |
+| `/finance/emergency-status` | GET | ✅ | Emergency fund status |
+| `/savings/status` | GET | ✅ | Savings overview |
+| `/savings/plan` | POST | ✅ | Create savings plan |
+| `/savings/lock` | POST | ✅ | Lock savings |
+| `/savings/unlock` | POST | ✅ | Unlock savings |
+
+### ML Service
+
+Provides AI-powered financial insights.
+
+**Endpoints**:
+- `/health` - Service health check
+- `/predict/health-score` - Calculate financial health
+- `/predict/survival` - Predict survival days
+- `/predict/risk` - Behavioral risk scoring
+
+---
+
+## 🚀 Live Deployment
+
+CAPSTACK is deployed on **Render Cloud Platform** for production access.
+
+### 🖥️ Frontend Dashboard
+**📍 https://capstack-2k25-frontend.onrender.com/**
+
+Built with:
+- Next.js 14 + TypeScript
+- Material UI design system
+- Real-time data visualization
+
+Features:
+- 📊 Income & expense analytics
+- 🎯 Financial health dashboard
+- 💾 Savings management
+- 🚨 Real-time alerts
+- 📈 Trend analysis
+
+### ⚙️ Backend API
+**📍 https://capstack-2k25-backend.onrender.com/**
+
+Powered by:
+- Node.js + Express
+- PostgreSQL database
+- JWT authentication
+- Smart savings engine
+
+Capabilities:
+- Financial calculations
+- User authentication
+- Transaction processing
+- ML model integration
+
+### 🧠 ML Service
+Deployed locally or via Docker
+
+Provides:
+- Health score computation
+- Survival prediction
+- Risk assessment
+- Trend analysis
+
+### Cloud Architecture
+
+```
+┌─────────────────────────────────┐
+│     User Browser                │
+└────────────────┬────────────────┘
+                 │
+                 │ HTTPS
+                 ▼
+        ┌─────────────────┐
+        │  Render Edge    │
+        │  (CDN/Cache)    │
+        └────────┬────────┘
+                 │
+        ┌────────▼────────┐
+        │ Frontend (Next) │  ← Static hosting
+        │ Backend (Node)  │  ← API service
+        │ PostgreSQL      │  ← Data persistence
+        │ Redis           │  ← Caching layer
+        └─────────────────┘
+```
+
+### Deployment Features
+
+✅ **Zero-downtime deployments**  
+✅ **Auto-build on GitHub push**  
+✅ **HTTPS/SSL enabled**  
+✅ **Health checks & monitoring**  
+✅ **Auto-scaling ready**  
+✅ **Database backups**
+
+---
+
+## 🧪 Testing
+
+```bash
 # Backend tests
-cd backend-api && npm test
+cd backend-api
+npm test                    # Run all tests
+npm run test:watch        # Watch mode
+npm run test:coverage     # Coverage report
 
 # Frontend tests
-cd frontend && npm test
+cd frontend
+npm test                   # Run all tests
+npm run test:watch       # Watch mode
 
-🔄 CI/CD Pipeline
+# ML Service tests
+cd ml-service
+pytest                    # Run all tests
+pytest -v               # Verbose output
+pytest --cov           # Coverage report
+```
 
-Powered by GitHub Actions, including:
+---
 
-✔ Automated backend tests (Node + Vitest)
-✔ Automated ML service tests (pytest)
-✔ Docker image builds for all services
-✔ Linting & code quality checks
-✔ Auto deploy using GitHub Actions + Render/Docker
+## 🔄 CI/CD Pipeline
 
-See workflow in:
+Automated testing and deployment via GitHub Actions:
 
-.github/workflows/ci.yml
+1. **Code Push** → `git push origin main`
+2. **Tests Run** → Backend + Frontend + ML tests
+3. **Build** → Docker images created
+4. **Quality Checks** → ESLint, TypeScript, Linting
+5. **Deploy** → Auto-deploy to Render
+6. **Verify** → Health checks & monitoring
 
-🤝 Contributing
+**Workflow File**: `.github/workflows/ci.yml`
 
-Follow folder structure
+---
 
-Add tests for new features
+## 🤝 Contributing
 
-Use TypeScript for backend & frontend
+### Contribution Guidelines
 
-Update documentation after changes
+1. **Fork & Clone**
+   ```bash
+   git clone https://github.com/Abdul9010150809/CAPSTACK-2k25.git
+   cd CAPSTACK-2k25
+   ```
 
-Submit a pull request
+2. **Create Feature Branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-📄 License
+3. **Make Changes**
+   - Follow folder structure
+   - Use TypeScript/modern syntax
+   - Write meaningful commit messages
+
+4. **Add Tests**
+   - Backend: Add tests in `backend-api/tests/`
+   - Frontend: Add tests alongside components
+   - ML: Add pytest tests
+
+5. **Update Documentation**
+   - Document new features
+   - Update API docs if endpoints change
+
+6. **Submit Pull Request**
+   - Provide clear description
+   - Reference related issues
+   - Ensure tests pass
+
+### Code Standards
+
+- **Backend**: TypeScript with strict mode
+- **Frontend**: React best practices, hooks
+- **ML**: PEP 8 Python standards
+- **All**: Meaningful variable names, comments for complex logic
+
+---
+
+## 📄 License
 
 To be added.
 
-🌐 🚀 Live Deployment (Render Cloud Platform)
+---
 
-CAPSTACK is fully deployed on the cloud using Render, enabling seamless access to the platform’s features from anywhere.
+## 🎯 Getting Started
 
-Below are the production-ready live URLs:
+### For Users
+1. Visit https://capstack-2k25-frontend.onrender.com/
+2. Create an account or try guest mode
+3. Add financial data
+4. Get AI-powered insights
 
-🖥️ Frontend Dashboard (Live Application)
-👉 https://capstack-2k25-frontend.onrender.com/
+### For Developers
+1. Clone the repository
+2. Set up development environment
+3. Follow development setup guide above
+4. Read component documentation in `/docs`
+5. Check API docs at backend service
 
-🎨 Built with Next.js + TypeScript + Material UI
-📊 Provides users with:
+---
 
-Real-time insights
+## 📞 Support
 
-Income & expense analytics
+- **Issues & Bugs**: GitHub Issues
+- **Feature Requests**: GitHub Discussions
+- **Documentation**: See `/docs` folder
+- **Deployment Help**: Check Render logs
 
-AI-powered financial score
+---
 
-Smart savings UI
+## 🙏 Acknowledgments
 
-Survival prediction visuals
+Built for **Datanyx Hackathon 2025**
 
-⚙️ Backend API (Production Server)
-👉 https://capstack-2k25-backend.onrender.com/
+Powered by open-source technologies and the developer community.
 
-🧩 Powered by Node.js + Express + TypeScript
-📡 Handles:
+---
 
-Financial calculations
-
-Expense & income tracking
-
-JWT authentication
-
-Smart savings lock engine
-
-API communication with ML service
-
-🧠 ML Service (AI Engine) (Locally or Docker-deployed)
-
-📌 Provides AI-driven outputs such as:
-
-Financial Health Score
-
-Emergency Survival Prediction
-
-Behavioral Risk Scoring
-
-Expense trend analysis
-
-☁️ Cloud Deployment Architecture
-                   ┌───────────────────────────────┐
-                   │         User Browser           │
-                   └─────────────────┬──────────────┘
-                                     │
-                     Frontend Hosted on Render (Next.js)
-                                     │
-                   ┌─────────────────▼─────────────────┐
-                   │      Backend API (Render App)     │
-                   │   Node.js + Express + PostgreSQL   │
-                   └─────────────────┬─────────────────┘
-                                     │
-                           ML Service (Local/Docker)
-                                     │
-                   ┌─────────────────▼─────────────────┐
-                   │      PostgreSQL + Redis           │
-                   │ (Local / Docker / Cloud Ready)     │
-                   └───────────────────────────────────┘
-
-🛸 Deployment Features
-
-✔ Zero-downtime deployments
-✔ Auto-build on every GitHub push
-✔ Load-balanced backend
-✔ Static Next.js hosting on Render
-✔ Health checks for backend reliability
-✔ HTTPS-enabled secure services
-
-🔧 Auto-Deployment via GitHub Actions
-
-Whenever you push to main branch:
-
-🧪 CI Tests Run (Backend + ML + Frontend)
-
-🛠️ Docker images build automatically
-
-☁️ Render auto-deploys both frontend & backend
-
-🟢 Services restart with zero downtime
-
-🎯 Try the Platform Now
-
-🌐 Frontend: https://capstack-2k25-frontend.onrender.com/
-
-⚙️ Backend API Docs: https://capstack-2k25-backend.onrender.com/
+**Made with ❤️ for better financial health** 🏦
