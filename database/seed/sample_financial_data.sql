@@ -2,8 +2,8 @@
 -- Based on the master prompt requirements
 
 -- Insert sample user
-INSERT INTO users (email, password, name, created_at, updated_at) VALUES
-('demo@capstack.com', '$2b$10$hashedpassworddemo', 'Demo User', NOW(), NOW())
+INSERT INTO users (email, pin, name, created_at, updated_at) VALUES
+('demo@capstack.com', '1234', 'Demo User', NOW(), NOW())
 ON CONFLICT (email) DO NOTHING;
 
 -- Get user ID
