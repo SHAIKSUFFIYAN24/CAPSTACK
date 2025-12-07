@@ -3,8 +3,9 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 // Determine backend URL based on environment
 function getBackendUrl(): string {
   // 1. Check environment variable first (highest priority)
-  if (process.env.NEXT_PUBLIC_BACKEND_URL) {
-    return process.env.NEXT_PUBLIC_BACKEND_URL.replace(/\/$/, "");
+  const envUrl = process.env.NEXT_PUBLIC_BACKEND_URL?.trim();
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
   }
 
   // 2. Client-side detection
@@ -67,10 +68,45 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
+// Request interceptor to log outgoing requests
+api.interceptors.request.use((config) => {
+  console.log('🚀 Axios Request:', {
+    method: config.method?.toUpperCase(),
+    url: config.url,
+    baseURL: config.baseURL,
+    fullURL: config.baseURL + config.url,
+    headers: config.headers,
+    data: config.data,
+  });
+  return config;
+}, (error) => {
+  console.error('❌ Axios Request Error:', error);
+  return Promise.reject(error);
+});
+
 // Response interceptor to handle 401s and redirect to login
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('✅ Axios Response:', {
+      status: response.status,
+      url: response.config.url,
+      data: response.data,
+    });
+    return response;
+  },
   (error) => {
+    console.error('❌ Axios Response Error:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      url: error.config?.url,
+      baseURL: error.config?.baseURL,
+      fullURL: error.config?.baseURL + error.config?.url,
+      data: error.config?.data,
+      headers: error.config?.headers,
+    });
+
     try {
       if (error?.response?.status === 401) {
         // Clear invalid token

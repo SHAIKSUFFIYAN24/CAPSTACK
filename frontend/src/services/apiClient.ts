@@ -3,8 +3,9 @@ import axios from 'axios';
 // Determine backend URL based on environment
 function getApiBackendUrl(): string {
   // 1. Check environment variable first
-  if (process.env.NEXT_PUBLIC_BACKEND_URL) {
-    return process.env.NEXT_PUBLIC_BACKEND_URL.replace(/\/$/, "");
+  const envUrl = process.env.NEXT_PUBLIC_BACKEND_URL?.trim();
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
   }
 
   // 2. Client-side detection
@@ -22,8 +23,9 @@ function getApiBackendUrl(): string {
 // Determine ML URL based on environment
 function getMLUrl(): string {
   // 1. Check environment variable first
-  if (process.env.NEXT_PUBLIC_ML_URL) {
-    return process.env.NEXT_PUBLIC_ML_URL.replace(/\/$/, "");
+  const envUrl = process.env.NEXT_PUBLIC_ML_URL?.trim();
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
   }
 
   // 2. Client-side detection
