@@ -61,8 +61,16 @@ export default function Savings() {
   const [error, setError] = useState<string | null>(null);
   const [lockDialogOpen, setLockDialogOpen] = useState(false);
   const [unlockDialogOpen, setUnlockDialogOpen] = useState(false);
+  const [createPlanDialogOpen, setCreatePlanDialogOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<SavingsPlan | null>(null);
   const [lockAmount, setLockAmount] = useState('');
+  const [newPlan, setNewPlan] = useState({
+    name: '',
+    target_amount: 0,
+    monthly_contribution: 0,
+    lock_percentage: 80,
+    target_date: ''
+  });
 
   const fetchSavingsData = async () => {
     try {
@@ -134,9 +142,7 @@ export default function Savings() {
 
   const handleUnlockSavings = async (planId: number) => {
     try {
-      await api.post(`/savings/unlock`, {
-        planId
-      });
+      await api.post(`/savings/unlock/${planId}`, {});
       fetchSavingsData(); // Refresh data
     } catch (err) {
       const e: any = err;
@@ -144,6 +150,33 @@ export default function Savings() {
         setError('Please sign in');
       } else {
         console.error('Failed to unlock savings:', err);
+      }
+    }
+  };
+
+  const handleCreatePlan = async () => {
+    if (!newPlan.name || !newPlan.target_amount || !newPlan.monthly_contribution || !newPlan.target_date) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    try {
+      await api.post(`/savings/plan`, newPlan);
+      setCreatePlanDialogOpen(false);
+      setNewPlan({
+        name: '',
+        target_amount: 0,
+        monthly_contribution: 0,
+        lock_percentage: 80,
+        target_date: ''
+      });
+      fetchSavingsData(); // Refresh data
+    } catch (err) {
+      const e: any = err;
+      if (e?.response?.status === 401) {
+        setError('Please sign in to create plans');
+      } else {
+        console.error('Failed to create plan:', err);
       }
     }
   };
@@ -292,7 +325,7 @@ export default function Savings() {
               <Button startIcon={<Refresh />} onClick={fetchSavingsData} size="small">
                 Refresh
               </Button>
-              <Button variant="contained" startIcon={<Add />}>
+              <Button variant="contained" startIcon={<Add />} onClick={() => setCreatePlanDialogOpen(true)}>
                 Create New Plan
               </Button>
             </Stack>
@@ -380,7 +413,7 @@ export default function Savings() {
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                     Create your first savings plan to start building your financial security.
                   </Typography>
-                  <Button variant="contained" startIcon={<Add />}>
+                  <Button variant="contained" startIcon={<Add />} onClick={() => setCreatePlanDialogOpen(true)}>
                     Create Your First Plan
                   </Button>
                 </Paper>
@@ -388,6 +421,59 @@ export default function Savings() {
             )}
           </Grid>
         </Box>
+
+        {/* Create Plan Dialog */}
+        <Dialog open={createPlanDialogOpen} onClose={() => setCreatePlanDialogOpen(false)} maxWidth="sm" fullWidth>
+          <DialogTitle>Create Savings Plan</DialogTitle>
+          <DialogContent>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
+              <TextField
+                label="Plan Name"
+                placeholder="e.g., Emergency Fund, Vacation Fund"
+                fullWidth
+                value={newPlan.name}
+                onChange={(e) => setNewPlan({ ...newPlan, name: e.target.value })}
+              />
+              <TextField
+                label="Target Amount (₹)"
+                type="number"
+                fullWidth
+                value={newPlan.target_amount}
+                onChange={(e) => setNewPlan({ ...newPlan, target_amount: parseFloat(e.target.value) })}
+              />
+              <TextField
+                label="Monthly Contribution (₹)"
+                type="number"
+                fullWidth
+                value={newPlan.monthly_contribution}
+                onChange={(e) => setNewPlan({ ...newPlan, monthly_contribution: parseFloat(e.target.value) })}
+              />
+              <TextField
+                label="Lock Percentage (%)"
+                type="number"
+                fullWidth
+                inputProps={{ min: 0, max: 100 }}
+                value={newPlan.lock_percentage}
+                onChange={(e) => setNewPlan({ ...newPlan, lock_percentage: parseInt(e.target.value) })}
+                helperText="Percentage of savings to auto-lock"
+              />
+              <TextField
+                label="Target Date"
+                type="date"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                value={newPlan.target_date}
+                onChange={(e) => setNewPlan({ ...newPlan, target_date: e.target.value })}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setCreatePlanDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleCreatePlan} variant="contained">
+              Create Plan
+            </Button>
+          </DialogActions>
+        </Dialog>
 
         {/* Lock Savings Dialog */}
         <Dialog open={lockDialogOpen} onClose={() => setLockDialogOpen(false)}>

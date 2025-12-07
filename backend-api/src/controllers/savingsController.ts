@@ -33,6 +33,9 @@ export const getStatus = async (req: Request, res: Response) => {
 
 export const createPlan = async (req: Request, res: Response) => {
   const userId = (req as any).userId;
+  if (!userId) {
+    return res.status(401).json({ error: 'Authentication required to create savings plans' });
+  }
   const planData = req.body;
   const result = createSavingsPlan(userId, planData);
   res.json(result);

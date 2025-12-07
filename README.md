@@ -262,7 +262,7 @@ Smart savings UI
 Survival prediction visuals
 
 ⚙️ Backend API (Production Server)
-👉 https://capstack-2k25.onrender.com/
+👉 https://capstack-2k25-backend.onrender.com/
 
 🧩 Powered by Node.js + Express + TypeScript
 📡 Handles:
@@ -333,4 +333,4 @@ Whenever you push to main branch:
 
 🌐 Frontend: https://capstack-2k25-frontend.onrender.com/
 
-⚙️ Backend API Docs: https://capstack-2k25.onrender.com/
+⚙️ Backend API Docs: https://capstack-2k25-backend.onrender.com/
