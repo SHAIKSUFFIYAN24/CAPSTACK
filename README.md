@@ -12,13 +12,13 @@ Designed for the **Datanyx 2025 International Hackathon**, this edition features
 
 ---
 
-## 👥 Team Error 404
+## 👥 Team Spark
 
 **Team Members:**
-- **Shaik Abdul Sammed** - Full Stack Developer & Team Lead
+- **Shaik Abdul Sammed** - Full Stack Developer
 - **Shaik Muzkeer** - Backend Developer
-- **Shaik Shafi** - Frontend Developer
-- **B. Praveen** - ML Engineer
+- **S M Mukram Khan** - Frontend Developer
+- **Shaik.Suffiyan** - ML Engineer & Team Lead
 
 ---
 
