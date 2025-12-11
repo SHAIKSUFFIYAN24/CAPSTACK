@@ -229,4 +229,4 @@ Comprehensive demonstration materials are available in the `/output` directory:
 
 -----
 
-**Built with ❤️ by Team Error 404 for Datanyx 2025**
+**Built with ❤️ by Team spark for Mind Sprint 2025**
