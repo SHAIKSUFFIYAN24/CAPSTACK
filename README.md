@@ -8,17 +8,14 @@
 > **"Build Your Safety Net Before the Market Shifts"**
 CAPSTACK is a comprehensive multi-service platform designed to democratize financial wellness. By combining full-stack architecture with AI/ML predictive modeling, we provide users with actionable insights, automated savings protocols, and intelligent analytics. 
 
-Designed for the **Datanyx 2025 International Hackathon**, this edition features premium UI/UX, production-ready code stability, and zero-downtime deployment.
 
 ---
 
 ## 👥 Team Spark
 
 **Team Members:**
-- **Shaik Abdul Sammed** - Full Stack Developer
-- **Shaik Muzkeer** - Backend Developer
-- **S M Mukram Khan** - Frontend Developer
 - **Shaik.Suffiyan** - ML Engineer  & Team Lead
+- **S M Mukram Khan** - Frontend Developer
 
 ---
 
